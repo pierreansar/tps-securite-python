@@ -7,9 +7,8 @@ def main():
     logger.info("Starting TP1")
 
     capture = Capture()
-    capture.capture_traffic()
-    capture.analyse("tcp")
-    summary = capture.get_summary()
+    capture.capture_traffic()   # bloque jusqu'au Ctrl+C, analyse chaque paquet à la volée grâce à prn=self.analyse
+    summary = capture.gen_summary()
 
     filename = "report.pdf"
     report = Report(capture, filename, summary)

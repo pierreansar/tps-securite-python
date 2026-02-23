@@ -27,3 +27,9 @@ Lancer le projet :
 ```bash
 poetry run tp1
 ```
+
+Lancer les tests : 
+
+```bash
+poetry run pytest
+```
