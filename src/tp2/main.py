@@ -5,8 +5,6 @@ from tp2.utils.config import logger
 from tp2.utils.shell_code_analyzer import ShellCodeAnalyzer
 
 if __name__ == "__main__":
-    logger.info(f"Key openai value : {os.getenv('OPENAI_API_KEY')}")
-
     # Shellcode en hex : priorité à l'arg CLI, puis à la variable d'env SHELLCODE
     if len(sys.argv) > 1:
         shellcode_hex = sys.argv[1]

@@ -38,5 +38,7 @@ COPY src/tp2/ src/tp2/
 # "from src.config import logging" → PYTHONPATH doit contenir /app
 # "from tp2.utils.config import logger" → PYTHONPATH doit contenir /app/src
 ENV PYTHONPATH="/app:/app/src"
+# Désactive le buffering Python pour avoir les prints en temps réel
+ENV PYTHONUNBUFFERED=1
 
 CMD ["python", "src/tp2/main.py"]
