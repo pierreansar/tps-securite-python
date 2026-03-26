@@ -29,7 +29,8 @@ def test_prepare_request():
 
     # Then
     assert session.captcha_value == "ABC123"
-    assert session.flag_value == "ABC123"
+    # flag_value est le flag courant (entier de la plage), pas la valeur du captcha
+    assert session.flag_value == str(session._current_flag)
 
 
 def test_submit_request():
@@ -48,10 +49,11 @@ def test_submit_request():
 
 
 def test_process_response_esgi_flag():
-    # Given
+    # Given — réponse serveur réelle : page HTML complète (> 1226 chars) + flag
     session = Session("http://example.com/captcha")
     mock_response = MagicMock()
-    mock_response.text = "Bravo ! ESGI{captcha_solved_42}"
+    base_html = "x" * 1300  # simule une réponse plus longue que la page d'erreur
+    mock_response.text = base_html + " ESGI{captcha_solved_42}"
     session._response = mock_response
 
     # When
@@ -63,10 +65,10 @@ def test_process_response_esgi_flag():
 
 
 def test_process_response_generic_success():
-    # Given
+    # Given — réponse de succès avec classe alert-success
     session = Session("http://example.com/captcha")
     mock_response = MagicMock()
-    mock_response.text = "Correct! flag = MY_FLAG_123"
+    mock_response.text = "x" * 1300 + ' <p class="alert-success col-md-2">MY_FLAG_123</p>'
     session._response = mock_response
 
     # When
